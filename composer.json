@@ -2,7 +2,7 @@
     "name": "chirani/php_two",
     "autoload": {
         "psr-4": {
-            "Chirani\\PhpTwo\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [

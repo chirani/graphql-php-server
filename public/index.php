@@ -1,15 +1,21 @@
 <?php
 
-use App\MyGraphql\SchemaBuilder;
 use GraphQL\GraphQL;
 
-require __DIR__ . '/vendor/autoload.php';
+
+require_once __DIR__ . '/../vendor/autoload.php';
+$entityManager = require_once __DIR__ . '/../bootstrap.php';
+
+use App\MyGraphql\SchemaBuilder;
 
 $router = new \Bramus\Router\Router();
 
+$router->before('GET|POST|PUT|DELETE', '/api/.*', function () {
+    header('Content-Type: application/json');
+});
 
 $router->get('/api/graphql', function () {
-    echo "Hello GraphQL";
+    // echo "Hello GraphQL";
     try {
         $schema = SchemaBuilder::build();
         $rawInput = file_get_contents('php://input');
@@ -20,6 +26,7 @@ $router->get('/api/graphql', function () {
         if (!$query) {
             throw new Exception("No query provided.");
         }
+
         $result = GraphQL::executeQuery($schema, $query, null, null, $variables);
         $output = $result->toArray();
     } catch (Exception $e) {
