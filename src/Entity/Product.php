@@ -9,9 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    private ?int $id = null;
+    #[ORM\Column(type: 'string')]
+    private string $id;
 
     #[ORM\Column(type: 'string')]
     private string $name;
@@ -20,8 +19,9 @@ class Product
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false)]
     private ?Category $category = null;
 
-    public function __construct(string $name)
+    public function __construct(string $id, string $name)
     {
+        $this->id = $id;
         $this->name = $name;
     }
 
