@@ -19,10 +19,19 @@ class Product
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false)]
     private ?Category $category = null;
 
-    public function __construct(string $id, string $name)
+    #[ORM\Column(type: 'boolean')]
+    private bool $inStock;
+
+    #[ORM\Column(type: 'string')]
+    private string $description;
+
+
+    public function __construct(string $id, string $name, bool $inStock, string $description)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->inStock = $inStock;
+        $this->description = $description;
     }
 
     public function getCategory(): ?Category
