@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Persistence\Proxy;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'products')]
@@ -25,6 +28,8 @@ class Product
     #[ORM\Column(type: 'string')]
     private string $description;
 
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: ProductContent::class)]
+    private Collection $productContents;
 
     public function __construct(string $id, string $name, bool $inStock, string $description)
     {
@@ -42,5 +47,6 @@ class Product
     public function setCategory(Category $category): void
     {
         $this->category = $category;
+        $this->productContents = new ArrayCollection();
     }
 }
