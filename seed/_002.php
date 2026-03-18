@@ -2,9 +2,10 @@
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\ProductContent;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-require __DIR__ . "/../../bootstrap.php";
+require_once __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../bootstrap.php';
 
 $json = file_get_contents(__DIR__ . "/data.json");
 $json_data = json_decode($json, true);
@@ -39,6 +40,17 @@ foreach ($products as $product) {
     $new_product->setCategory($category);
 
     $entityManager->persist($new_product);
+
+    $gallery = $product["gallery"];
+
+    foreach ($gallery as $key => $value) {
+        if (!$value) {
+            continue;
+        }
+        $new_picture = new ProductContent($key, $value);
+        $new_picture->setProduct($new_product);
+        $entityManager->persist($new_picture);
+    }
 }
 
 $entityManager->flush();
