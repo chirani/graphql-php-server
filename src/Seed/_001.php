@@ -2,7 +2,7 @@
 
 use App\Entity\Category;
 
-require_once "bootstrap.php";
+require_once __DIR__ . '/../../bootstrap.php';
 
 
 $json = file_get_contents(__DIR__ . "/data.json");
