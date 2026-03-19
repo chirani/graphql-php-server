@@ -18,10 +18,6 @@ class Product
     #[ORM\Column(type: 'string')]
     private string $name;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
-    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false)]
-    private ?Category $category = null;
-
     #[ORM\Column(type: 'boolean')]
     private bool $inStock;
 
@@ -31,12 +27,21 @@ class Product
     #[ORM\OneToMany(mappedBy: 'products', targetEntity: ProductContent::class)]
     private Collection $productContents;
 
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Price::class)]
+    private Collection $prices;
+
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false)]
+    private ?Category $category = null;
+
     public function __construct(string $id, string $name, bool $inStock, string $description)
     {
         $this->id = $id;
         $this->name = $name;
         $this->inStock = $inStock;
         $this->description = $description;
+        $this->productContents = new ArrayCollection();
+        $this->prices = new ArrayCollection();
     }
 
     public function getCategory(): ?Category
@@ -47,6 +52,5 @@ class Product
     public function setCategory(Category $category): void
     {
         $this->category = $category;
-        $this->productContents = new ArrayCollection();
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Entity\Category;
+use App\Entity\Currency;
+use App\Entity\Price;
 use App\Entity\Product;
 use App\Entity\ProductContent;
 
@@ -29,6 +31,21 @@ function getProductCategory(string $category_id, $entityManager): object |null
     return $category;
 }
 
+function getCurrency(string $id, $entityManager): object |null
+{
+
+    $currencyRepository = $entityManager->getRepository(Currency::class);
+
+    $currency = $currencyRepository->find($id);
+
+    if (!$currency) {
+        echo "Error: Currency not found.\n";
+        return null;
+    }
+
+    return $currency;
+}
+
 foreach ($products as $product) {
     $category = getProductCategory($product["category"], $entityManager);
 
@@ -51,6 +68,22 @@ foreach ($products as $product) {
         $new_picture->setProduct($new_product);
         $entityManager->persist($new_picture);
     }
+    $prices = $product["prices"];
+    foreach ($prices as $price) {
+
+        $currency = getCurrency("USD", $entityManager);
+
+        if (!$currency) {
+            continue;
+        }
+
+        $new_price = new Price($price["amount"]);
+        $new_price->setCurrency($currency);
+        $new_price->setProduct($new_product);
+        $entityManager->persist($new_price);
+    }
 }
 
 $entityManager->flush();
+
+echo "Products seeded successfully\n";

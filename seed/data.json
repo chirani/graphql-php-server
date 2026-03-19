@@ -1,5 +1,11 @@
 {
     "data": {
+        "currencies": [
+            {
+                "label": "USD",
+                "symbol": "$"
+            }
+        ],
         "categories": [
             {
                 "id": "all",
