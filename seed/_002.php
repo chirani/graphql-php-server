@@ -4,6 +4,8 @@ use App\Entity\Category;
 use App\Entity\Currency;
 use App\Entity\Price;
 use App\Entity\Product;
+use App\Entity\ProductAttribute;
+use App\Entity\ProductAttributeValue;
 use App\Entity\ProductContent;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -69,6 +71,7 @@ foreach ($products as $product) {
         $entityManager->persist($new_picture);
     }
     $prices = $product["prices"];
+
     foreach ($prices as $price) {
 
         $currency = getCurrency("USD", $entityManager);
@@ -81,6 +84,24 @@ foreach ($products as $product) {
         $new_price->setCurrency($currency);
         $new_price->setProduct($new_product);
         $entityManager->persist($new_price);
+    }
+
+    $attributes = $product["attributes"];
+
+    foreach ($attributes as $attribute) {
+        $new_attribute = new ProductAttribute($attribute["id"]);
+        $new_attribute->setProduct($new_product);
+        $entityManager->persist($new_attribute);
+
+        $attribute_items = $attribute["items"];
+
+        foreach ($attribute_items as $attribute_item) {
+            $new_attribute_item = new ProductAttributeValue($attribute_item["id"], $attribute_item["value"], $attribute_item["displayValue"]);
+
+            $new_attribute_item->setProduct($new_product);
+            $new_attribute_item->setProductAttribute($new_attribute);
+            $entityManager->persist($new_attribute_item);
+        }
     }
 }
 

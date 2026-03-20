@@ -30,6 +30,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'products', targetEntity: Price::class)]
     private Collection $prices;
 
+    #[ORM\OneToMany(mappedBy: 'product_attributes', targetEntity: ProductAttribute::class)]
+    private Collection $productAttributes;
+
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false)]
     private ?Category $category = null;

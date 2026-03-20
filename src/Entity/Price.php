@@ -2,23 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
-
-/*
-"prices": [
-{
-"amount": 144.69,
-"currency": {
-"label": "USD",
-"symbol": "$",
-"__typename": "Currency"
-},
-"__typename": "Price"
-}
-],
-*/
 
 #[ORM\Entity]
 #[ORM\Table(name: 'prices')]
