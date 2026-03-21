@@ -47,13 +47,24 @@ class Product
         $this->prices = new ArrayCollection();
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): string
     {
-        return $this->category;
+        $category =  $this->category;
+        return $category->getId();
     }
 
     public function setCategory(Category $category): void
     {
         $this->category = $category;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

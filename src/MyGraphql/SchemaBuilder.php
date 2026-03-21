@@ -3,7 +3,9 @@
 namespace App\MyGraphql;
 
 use App\MyGraphql\ObjectTypes\CategoryType;
+use App\MyGraphql\ObjectTypes\ProductType;
 use App\Repository\CategoryRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
@@ -22,6 +24,8 @@ class SchemaBuilder
             ]
         ]);
         $categoryRepo = new CategoryRepository($entityManager);
+        $productRepo = new ProductRepository($entityManager);
+
         $queryType = new ObjectType([
             "name" => "Query",
             'fields' => [
@@ -33,6 +37,17 @@ class SchemaBuilder
                     'type' => Type::listOf(new CategoryType()),
                     'resolve' => function () use ($categoryRepo) {
                         return $categoryRepo->findAll();
+                    }
+                ],
+                "products" => [
+                    "type" => Type::listOf(new ProductType()),
+                    'args' => [
+                        'category' => Type::string()
+                    ],
+                    'resolve' => function ($_, $args) use ($productRepo) {
+                        if ($args["category"] === "all") {
+                            return $productRepo->findAll();
+                        }
                     }
                 ]
             ]
