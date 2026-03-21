@@ -26,4 +26,14 @@ class Category
         $this->name = $name;
         $this->products = new ArrayCollection();
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }

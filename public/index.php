@@ -4,7 +4,6 @@ use GraphQL\GraphQL;
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
-$entityManager = require_once __DIR__ . '/../bootstrap.php';
 
 use App\MyGraphql\SchemaBuilder;
 
@@ -14,10 +13,10 @@ $router->before('GET|POST|PUT|DELETE', '/api/.*', function () {
     header('Content-Type: application/json');
 });
 
-$router->get('/api/graphql', function () {
-    // echo "Hello GraphQL";
+$router->all('/api/graphql', function () {
+    require_once __DIR__ . '/../bootstrap.php';
     try {
-        $schema = SchemaBuilder::build();
+        $schema = SchemaBuilder::build($entityManager);
         $rawInput = file_get_contents('php://input');
         $input = json_decode($rawInput, true);
         $query = $input['query'] ?? null;
