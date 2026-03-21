@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Persistence\Proxy;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'products')]
@@ -66,5 +65,10 @@ class Product
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }

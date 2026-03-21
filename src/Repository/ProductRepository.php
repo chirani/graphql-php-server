@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Product;
 
