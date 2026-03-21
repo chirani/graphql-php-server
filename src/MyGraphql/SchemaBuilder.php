@@ -23,6 +23,7 @@ class SchemaBuilder
                 "category_id" => Type::string(),
             ]
         ]);
+
         $categoryRepo = new CategoryRepository($entityManager);
         $productRepo = new ProductRepository($entityManager);
 
@@ -47,6 +48,8 @@ class SchemaBuilder
                     'resolve' => function ($_, $args) use ($productRepo) {
                         if ($args["category"] === "all") {
                             return $productRepo->findAll();
+                        } else {
+                            return $productRepo->findByCategory($args["category"]);
                         }
                     }
                 ]

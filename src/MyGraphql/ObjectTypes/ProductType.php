@@ -24,6 +24,10 @@ class ProductType extends ObjectType
                 'category' => [
                     'type' => Type::string(),
                     'resolve' => fn(Product $product) => $product->getCategory()
+                ],
+                'description' => [
+                    'type' => Type::string(),
+                    'resolve' => fn(Product $product) => $product->getDescription()
                 ]
             ]
         ]);

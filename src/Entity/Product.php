@@ -49,7 +49,7 @@ class Product
 
     public function getCategory(): string
     {
-        $category =  $this->category;
+        $category = $this->category;
         return $category->getId();
     }
 

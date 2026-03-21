@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Product;
 
@@ -14,6 +15,17 @@ class ProductRepository
         $products = $this->em
             ->getRepository(Product::class)
             ->findAll();
+
+        count($products);
+
+        return $products;
+    }
+
+    public function findByCategory(string $category): array
+    {
+        $products = $this->em
+            ->getRepository(Product::class)
+            ->findBy(["category" => $category]);
 
         count($products);
 
