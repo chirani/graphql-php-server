@@ -29,6 +29,10 @@ class ProductType extends ObjectType
                     'type' => Type::string(),
                     'resolve' => fn(Product $product) => $product->getDescription()
                 ],
+                'inStock' => [
+                    'type' => Type::boolean(),
+                    'resolve' => fn(Product $product) => $product->isInStock()
+                ],
                 'prices' => [
                     'type' => Type::listOf(new PriceType()),
                     'resolve' => fn(Product $product) => $product->getPrices()

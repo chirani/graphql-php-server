@@ -72,6 +72,12 @@ class Product
         return $this->description;
     }
 
+    public function isInStock(): string
+    {
+        return $this->inStock;
+    }
+
+
     public function getPrices(): Collection
     {
         return $this->prices;
