@@ -34,9 +34,13 @@ class ProductRepository
 
         $queryBuilder
             ->select('p')
+            ->addSelect('pr')
+            ->addSelect('cu')
+            ->join('p.category', 'c')
             ->leftJoin('p.prices', 'pr')
-            ->where('p.category = :category_id')
-            ->setParameter('category_id', $categoryId);
+            ->leftJoin('pr.currency', 'cu')
+            ->where('c.id = :category')
+            ->setParameter('category', $categoryId);
 
         $results = $queryBuilder->getQuery()->getResult();
 

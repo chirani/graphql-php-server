@@ -39,6 +39,11 @@ class Price
         $this->currency = $currency;
     }
 
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
     public function getId(): int
     {
         return $this->id;

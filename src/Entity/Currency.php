@@ -20,7 +20,7 @@ class Currency
     #[ORM\Column(type: "string")]
     private string $symbol;
 
-    #[ORM\OneToMany(mappedBy: 'prices', targetEntity: Price::class)]
+    #[ORM\OneToMany(mappedBy: 'currency', targetEntity: Price::class)]
     private Collection $prices;
 
     public function __construct(string $label, string $symbol)
@@ -29,5 +29,20 @@ class Currency
         $this->label = $label;
         $this->symbol = $symbol;
         $this->prices = new ArrayCollection();
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    public function getSymbol(): string
+    {
+        return $this->symbol;
     }
 }

@@ -20,6 +20,10 @@ class PriceType extends ObjectType
                 "amount" => [
                     'type' => Type::float(),
                     'resolve' => fn(Price $price) => $price->getAmount()
+                ],
+                "currency" => [
+                    'type' => new CurrencyType(),
+                    'resolve' => fn(Price $price) => $price->getCurrency()
                 ]
             ]
         ]);
