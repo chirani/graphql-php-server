@@ -38,4 +38,14 @@ class Price
     {
         $this->currency = $currency;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
 }

@@ -28,6 +28,10 @@ class ProductType extends ObjectType
                 'description' => [
                     'type' => Type::string(),
                     'resolve' => fn(Product $product) => $product->getDescription()
+                ],
+                'prices' => [
+                    'type' => Type::listOf(new PriceType()),
+                    'resolve' => fn(Product $product) => $product->getPrices()
                 ]
             ]
         ]);

@@ -23,10 +23,10 @@ class Product
     #[ORM\Column(type: 'string')]
     private string $description;
 
-    #[ORM\OneToMany(mappedBy: 'products', targetEntity: ProductContent::class)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductContent::class)]
     private Collection $productContents;
 
-    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Price::class)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Price::class)]
     private Collection $prices;
 
     #[ORM\OneToMany(mappedBy: 'product_attributes', targetEntity: ProductAttribute::class)]
@@ -70,5 +70,10 @@ class Product
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getPrices(): Collection
+    {
+        return $this->prices;
     }
 }

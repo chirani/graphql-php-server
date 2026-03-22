@@ -22,12 +22,24 @@ class ProductRepository
 
     public function findByCategory(string $category): array
     {
-        $products = $this->em
-            ->getRepository(Product::class)
-            ->findBy(["category" => $category]);
+        return $this->em->getRepository(Product::class)
+            ->findBy(['category' => $category]);
+    }
 
-        count($products);
+    public function findByCategory2(string $categoryId): array
+    {
+        $repository = $this->em->getRepository(Product::class);
 
-        return $products;
+        $queryBuilder = $repository->createQueryBuilder("p");
+
+        $queryBuilder
+            ->select('p')
+            ->leftJoin('p.prices', 'pr')
+            ->where('p.category = :category_id')
+            ->setParameter('category_id', $categoryId);
+
+        $results = $queryBuilder->getQuery()->getResult();
+
+        return $results;
     }
 }

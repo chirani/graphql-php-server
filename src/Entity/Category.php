@@ -17,7 +17,7 @@ class Category
     #[ORM\Column(type: "string")]
     private string $name;
 
-    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Product::class)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Product::class)]
     private Collection $products;
 
     public function __construct(string $id, string $name)
