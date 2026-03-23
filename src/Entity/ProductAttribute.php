@@ -37,4 +37,9 @@ class ProductAttribute
     {
         $this->product = $product;
     }
+
+    public function getSid()
+    {
+        return $this->sid;
+    }
 }

@@ -37,6 +37,7 @@ class ProductRepository
             ->addSelect('pr')
             ->addSelect('cu')
             ->join('p.category', 'c')
+            ->leftJoin('p.productAttributes', 'pa')
             ->leftJoin('p.prices', 'pr')
             ->leftJoin('pr.currency', 'cu')
             ->where('c.id = :category')

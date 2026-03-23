@@ -33,6 +33,10 @@ class ProductType extends ObjectType
                     'type' => Type::boolean(),
                     'resolve' => fn(Product $product) => $product->isInStock()
                 ],
+                "attributes" => [
+                    'type' =>  Type::listOf(new ProductAttributeType()),
+                    'resolve' => fn(Product $product) => $product->getProductAttributes()
+                ],
                 'prices' => [
                     'type' => Type::listOf(new PriceType()),
                     'resolve' => fn(Product $product) => $product->getPrices()

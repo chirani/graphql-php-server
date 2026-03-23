@@ -29,7 +29,7 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Price::class)]
     private Collection $prices;
 
-    #[ORM\OneToMany(mappedBy: 'product_attributes', targetEntity: ProductAttribute::class)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductAttribute::class)]
     private Collection $productAttributes;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
@@ -81,5 +81,10 @@ class Product
     public function getPrices(): Collection
     {
         return $this->prices;
+    }
+
+    public function getProductAttributes(): Collection
+    {
+        return $this->productAttributes;
     }
 }
