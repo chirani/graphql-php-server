@@ -23,7 +23,7 @@ class ProductAttribute
     private ?Product $product = null;
 
 
-    #[ORM\OneToMany(mappedBy: 'product_attributes', targetEntity: ProductAttributeValue::class)]
+    #[ORM\OneToMany(mappedBy: 'productAttribute', targetEntity: ProductAttributeValue::class)]
     private Collection $productAttributeValues;
 
 
@@ -41,5 +41,10 @@ class ProductAttribute
     public function getSid()
     {
         return $this->sid;
+    }
+
+    public function getProductAttributeValue()
+    {
+        return $this->productAttributeValues;
     }
 }

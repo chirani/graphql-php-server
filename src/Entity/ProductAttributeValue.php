@@ -43,4 +43,19 @@ class ProductAttributeValue
     {
         $this->productAttribute = $productAttribute;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getDisplayValue()
+    {
+        return $this->displayValue;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
 }
