@@ -1,5 +1,6 @@
 <?php
 
+use App\Entity\Brand;
 use App\Entity\Category;
 use App\Entity\Currency;
 use App\Entity\Price;
@@ -33,6 +34,21 @@ function getProductCategory(string $category_id, $entityManager): object |null
     return $category;
 }
 
+function getProductBrand(string $brand_id, $entityManager): object |null
+{
+
+    $brandRepository = $entityManager->getRepository(Brand::class);
+
+    $brand = $brandRepository->find($brand_id);
+
+    if (!$brand) {
+        echo "Error: Category 'Electronics' not found. Please seed categories first.\n";
+        return null;
+    }
+
+    return $brand;
+}
+
 function getCurrency(string $id, $entityManager): object |null
 {
 
@@ -50,13 +66,15 @@ function getCurrency(string $id, $entityManager): object |null
 
 foreach ($products as $product) {
     $category = getProductCategory($product["category"], $entityManager);
+    $brand  = getProductBrand($product["brand"], $entityManager);
 
-    if (!$category) {
+    if (!$category || !$brand) {
         continue;
     }
 
     $new_product = new Product($product["id"], $product["name"], $product["inStock"], $product["description"]);
     $new_product->setCategory($category);
+    $new_product->setBrand($brand);
 
     $entityManager->persist($new_product);
 
