@@ -11,22 +11,27 @@ class ProductRepository
 
     public function findAll(): array
     {
-        $products = $this->em
-            ->getRepository(Product::class)
-            ->findAll();
+        $repository = $this->em->getRepository(Product::class);
 
-        count($products);
+        $queryBuilder = $repository->createQueryBuilder("p");
 
-        return $products;
+        $queryBuilder
+            ->select('p')
+            ->addSelect('pr')
+            ->addSelect('cu')
+            ->leftJoin('p.productAttributes', 'pa')
+            ->leftJoin('pa.productAttributeValues', 'pav')
+            ->leftJoin('p.brand', 'br')
+            ->leftJoin('p.productContents', 'pc')
+            ->leftJoin('p.prices', 'pr')
+            ->leftJoin('pr.currency', 'cu');
+
+        $results = $queryBuilder->getQuery()->getResult();
+
+        return $results;
     }
 
-    public function findByCategory(string $category): array
-    {
-        return $this->em->getRepository(Product::class)
-            ->findBy(['category' => $category]);
-    }
-
-    public function findByCategory2(string $categoryId): array
+    public function findByCategory(string $categoryId): array
     {
         $repository = $this->em->getRepository(Product::class);
 

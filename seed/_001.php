@@ -29,6 +29,9 @@ foreach ($currencies as $currency) {
 $uniqueBrands = [];
 
 foreach ($products as $product) {
+    if (!$product["brand"]) {
+        continue;
+    }
     $uniqueBrands[$product["brand"]] = $product["brand"];
 }
 

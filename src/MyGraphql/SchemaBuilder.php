@@ -49,7 +49,7 @@ class SchemaBuilder
                         if ($args["category"] === "all") {
                             return $productRepo->findAll();
                         } else {
-                            return $productRepo->findByCategory2($args["category"]);
+                            return $productRepo->findByCategory($args["category"]);
                         }
                     }
                 ]
