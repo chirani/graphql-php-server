@@ -37,9 +37,17 @@ class ProductType extends ObjectType
                     'type' =>  Type::listOf(new ProductAttributeType()),
                     'resolve' => fn(Product $product) => $product->getProductAttributes()
                 ],
+                "gallery" => [
+                    'type' => Type::listOf(Type::string()),
+                    'resolve' => fn(Product $product) => $product->getProductContents()
+                ],
                 'prices' => [
                     'type' => Type::listOf(new PriceType()),
                     'resolve' => fn(Product $product) => $product->getPrices()
+                ],
+                'brand' => [
+                    'type' => Type::string(),
+                    'resolve' => fn(Product $product) => $product->getBrandName()
                 ]
             ]
         ]);

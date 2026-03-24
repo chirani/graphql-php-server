@@ -29,6 +29,21 @@ class ProductContent
         $this->product_content_uri = $product_content_uri;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getProductContentUri()
+    {
+        return $this->product_content_uri;
+    }
+
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
     public function setProduct(Product $product)
     {
         $this->product = $product;

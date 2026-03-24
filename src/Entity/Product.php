@@ -36,6 +36,10 @@ class Product
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false)]
     private ?Category $category = null;
 
+    #[ORM\ManyToOne(targetEntity: Brand::class, inversedBy: 'products')]
+    #[ORM\JoinColumn(name: 'brand_id', referencedColumnName: 'id', nullable: false)]
+    private ?Brand $brand = null;
+
     public function __construct(string $id, string $name, bool $inStock, string $description)
     {
         $this->id = $id;
@@ -55,6 +59,11 @@ class Product
     public function setCategory(Category $category): void
     {
         $this->category = $category;
+    }
+
+    public function setBrand(Brand $brand): void
+    {
+        $this->brand = $brand;
     }
 
     public function getId(): string
@@ -86,5 +95,19 @@ class Product
     public function getProductAttributes(): Collection
     {
         return $this->productAttributes;
+    }
+
+    public function getProductContents(): array
+    {
+        $result = [];
+        foreach ($this->productContents as $productContent) {
+            $result[$productContent->getPosition()] = $productContent->getProductContentUri();
+        }
+        return $result;
+    }
+
+    public function getBrandName(): string
+    {
+        return  $this->brand->getName();
     }
 }
