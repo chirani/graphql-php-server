@@ -2,10 +2,11 @@
 
 use GraphQL\GraphQL;
 
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\MyGraphql\SchemaBuilder;
+
+require __DIR__ . "/cors.php";
 
 $router = new \Bramus\Router\Router();
 
@@ -13,7 +14,7 @@ $router->before('GET|POST|PUT|DELETE', '/api/.*', function () {
     header('Content-Type: application/json');
 });
 
-$router->all('/api/graphql', function () {
+$router->post('/api/graphql', function () {
     require_once __DIR__ . '/../bootstrap.php';
     try {
         $schema = SchemaBuilder::build($entityManager);
@@ -38,6 +39,7 @@ $router->all('/api/graphql', function () {
 
     header('Content-Type: application/json');
     echo json_encode($output);
+    return json_encode($output);
 });
 
 
