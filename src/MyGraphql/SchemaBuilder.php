@@ -15,17 +15,13 @@ class SchemaBuilder
 {
     public static function build(EntityManager $entityManager): Schema
     {
-        $productType = new ObjectType([
-            "name" => "Product",
-            "fields" => [
-                "id" => Type::int(),
-                "name" => Type::string(),
-                "category_id" => Type::string(),
-            ]
-        ]);
 
         $categoryRepo = new CategoryRepository($entityManager);
         $productRepo = new ProductRepository($entityManager);
+
+        // Reminder for myself : Complex types must be defined here::
+        $categoryType = new CategoryType();
+        $productType = new ProductType();
 
         $queryType = new ObjectType([
             "name" => "Query",
@@ -35,13 +31,22 @@ class SchemaBuilder
                     'resolve' => fn() => 'Heyyooo!'
                 ],
                 'categories' => [
-                    'type' => Type::listOf(new CategoryType()),
+                    'type' => Type::listOf($categoryType),
                     'resolve' => function () use ($categoryRepo) {
                         return $categoryRepo->findAll();
                     }
                 ],
+                'product' =>[
+                    "type" => Type::listOf($productType),
+                    'args' => [
+                        'productId' => Type::string()
+                    ],
+                    'resolve' => function ($_, $args) use ($productRepo) {
+                        return $productRepo->findById($args["productId"]);
+                    }
+                ],
                 "products" => [
-                    "type" => Type::listOf(new ProductType()),
+                    "type" => Type::listOf($productType),
                     'args' => [
                         'category' => Type::string()
                     ],
