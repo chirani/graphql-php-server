@@ -2,6 +2,7 @@
 
 namespace App\MyGraphql;
 
+use App\MyGraphql\InputTypes\CreateOrderInputType;
 use App\MyGraphql\ObjectTypes\CategoryType;
 use App\MyGraphql\ObjectTypes\ProductType;
 use App\Repository\CategoryRepository;
@@ -36,7 +37,7 @@ class SchemaBuilder
                         return $categoryRepo->findAll();
                     }
                 ],
-                'product' =>[
+                'product' => [
                     "type" => Type::listOf($productType),
                     'args' => [
                         'productId' => Type::string()
@@ -61,6 +62,36 @@ class SchemaBuilder
             ]
         ]);
 
-        return new Schema(['query' => $queryType]);
+        $mutationType = new ObjectType([
+            'name' => 'Mutation',
+            'fields' => [
+                'setMessage' => [
+                    'type' => Type::string(),
+                    'args' => [
+                        'message' => Type::string(),
+                    ],
+                    'resolve' => function ($root, $args) {
+                        return "Message received: " . $args['message'];
+                    }
+                ],
+                'createOrder' => [
+                    'type' => Type::string(), // or OrderType
+                    'args' => [
+                        'input' => Type::nonNull(new CreateOrderInputType()),
+                    ],
+                    'resolve' => function ($root, $args) {
+                        $orderData = $args['input'];
+
+                        // access data
+                        $email = $orderData['email'];
+                        $items = $orderData['items'];
+
+                        return "Order created for " . $email;
+                    }
+                ]
+            ],
+        ]);
+
+        return new Schema(['query' => $queryType, 'mutation' => $mutationType]);
     }
 }
