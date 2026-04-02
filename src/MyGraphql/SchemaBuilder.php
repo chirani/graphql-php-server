@@ -88,10 +88,10 @@ class SchemaBuilder
                         $email = $orderData['email'];
                         $name = $orderData['name'];
                         $address = $orderData['address'];
-
                         $currencyId = $orderData['currencyId'];
 
                         $orderRepo->createOrder($cartItems, $name, $email, $address, $currencyId);
+
                         return "Order created for " . $email;
                     }
                 ]

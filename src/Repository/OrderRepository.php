@@ -31,7 +31,6 @@ class OrderRepository extends ServiceEntityRepository
             $product = $em->getRepository(Product::class)
                 ->find($cartItem['productId']);
 
-
             if (is_null($product)) {
                 $response->error("Product not Found in DB", 404);
             }
@@ -45,26 +44,35 @@ class OrderRepository extends ServiceEntityRepository
 
             $em->persist($orderItem);
 
-            foreach ($cartItem['attributes'] as $attributeId => $attributeValueId) {
+            foreach ($cartItem['attributes'] as $itemAttribute) {
+                $attributeId = $itemAttribute["attributeId"];
+                $attributeValueId = $itemAttribute["attributeValueId"];
+
+                echo $attributeId;
+                echo $attributeValueId;
+
                 $attribute = $em->getRepository(ProductAttribute::class)
-                    ->find($attributeId);
+                    ->findOneBy(["sid" => $attributeId, "product" => $product->getId()]);
+
 
                 if (is_null($attribute)) {
                     $response->error("Attribute not Found", 404);
                 }
+                echo is_null($attribute) ? "null" : "Attribute found";
 
                 $attributeValue = $em->getRepository(ProductAttributeValue::class)
-                    ->find($attributeValueId);
+                    ->findBy(["id" => $attributeValueId]);
 
-                if (is_null($attributeValue)) {
+                echo count($attributeValue) ? "null" : "Attribute Value found";
+
+                if (!count($attributeValue)) {
                     $response->error("Attribute Value not Found", 404);
                 }
 
-                $orderItemAttribute = new OrderItemAttribute(
-                    $orderItem,
-                    $attribute,
-                    $attributeValue
-                );
+                $orderItemAttribute = new OrderItemAttribute();
+                $orderItemAttribute->setOrderItem($orderItem);
+                $orderItemAttribute->setProductAttribute($attribute);
+                $orderItemAttribute->setProductAttributeValue($attributeValue[0]);
 
                 $em->persist($orderItemAttribute);
             }
