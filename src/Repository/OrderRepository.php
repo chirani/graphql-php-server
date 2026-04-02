@@ -48,9 +48,6 @@ class OrderRepository extends ServiceEntityRepository
                 $attributeId = $itemAttribute["attributeId"];
                 $attributeValueId = $itemAttribute["attributeValueId"];
 
-                echo $attributeId;
-                echo $attributeValueId;
-
                 $attribute = $em->getRepository(ProductAttribute::class)
                     ->findOneBy(["sid" => $attributeId, "product" => $product->getId()]);
 
