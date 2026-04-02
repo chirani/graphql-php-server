@@ -23,12 +23,16 @@ class Currency
     #[ORM\OneToMany(mappedBy: 'currency', targetEntity: Price::class)]
     private Collection $prices;
 
+    #[ORM\OneToMany(mappedBy: "currency", targetEntity: Order::class)]
+    private Collection $orders;
+
     public function __construct(string $label, string $symbol)
     {
         $this->id = $label;
         $this->label = $label;
         $this->symbol = $symbol;
         $this->prices = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): string

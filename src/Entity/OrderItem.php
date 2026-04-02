@@ -18,19 +18,16 @@ class OrderItem
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: "items")]
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: "order_items")]
     #[ORM\JoinColumn(name: "order_id", referencedColumnName: "id")]
     private Order $order;
 
-    #[ORM\ManyToOne(targetEntity: Product::class)]
-    #[ORM\JoinColumn(name: "product_id", referencedColumnName: "id")]
-    private Product $product;
-
-    #[ORM\Column(type: "string")]
-    private string $name;
-
     #[ORM\Column(type: "decimal", precision: 10, scale: 2)]
-    private float $price;
+    private float $price_amount;
+
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'order_items')]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false)]
+    private ?Product $product = null;
 
     #[ORM\Column(type: "integer")]
     private int $quantity;
@@ -41,15 +38,18 @@ class OrderItem
     public function __construct(
         Order $order,
         Product $product,
-        string $name,
-        float $price,
+        float $price_amount,
         int $quantity
     ) {
         $this->order = $order;
         $this->product = $product;
-        $this->name = $name;
-        $this->price = $price;
+        $this->price_amount = $price_amount;
         $this->quantity = $quantity;
         $this->attributes = new ArrayCollection();
+    }
+
+    public function setProduct(Product $product)
+    {
+        $this->product = $product;
     }
 }

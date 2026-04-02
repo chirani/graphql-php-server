@@ -32,6 +32,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductAttribute::class)]
     private Collection $productAttributes;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class)]
+    private Collection $orderItems;
+
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false)]
     private ?Category $category = null;
@@ -47,7 +50,7 @@ class Product
         $this->inStock = $inStock;
         $this->description = $description;
         $this->productContents = new ArrayCollection();
-        $this->prices = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getCategory(): string

@@ -15,6 +15,7 @@ class OrderItemInputType extends InputObjectType
                 return [
                     'productId' => Type::nonNull(Type::string()),
                     'quantity' => Type::nonNull(Type::int()),
+                    'price_amount' => Type::nonNull(Type::float()),
                     'attributes' => Type::listOf(new OrderItemAttributeInputType()),
                 ];
             }

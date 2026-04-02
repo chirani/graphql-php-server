@@ -6,6 +6,7 @@ use App\MyGraphql\InputTypes\CreateOrderInputType;
 use App\MyGraphql\ObjectTypes\CategoryType;
 use App\MyGraphql\ObjectTypes\ProductType;
 use App\Repository\CategoryRepository;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Type\Definition\Type;
@@ -19,6 +20,7 @@ class SchemaBuilder
 
         $categoryRepo = new CategoryRepository($entityManager);
         $productRepo = new ProductRepository($entityManager);
+        $orderRepo = new OrderRepository($entityManager);
 
         // Reminder for myself : Complex types must be defined here::
         $categoryType = new CategoryType();
@@ -70,22 +72,26 @@ class SchemaBuilder
                     'args' => [
                         'message' => Type::string(),
                     ],
-                    'resolve' => function ($root, $args) {
+                    'resolve' => function ($_, $args) {
                         return "Message received: " . $args['message'];
                     }
                 ],
                 'createOrder' => [
-                    'type' => Type::string(), // or OrderType
+                    'type' => Type::string(),
                     'args' => [
                         'input' => Type::nonNull(new CreateOrderInputType()),
                     ],
-                    'resolve' => function ($root, $args) {
+                    'resolve' => function ($_, $args) use ($orderRepo) {
                         $orderData = $args['input'];
 
-                        // access data
+                        $cartItems = $orderData['items'];
                         $email = $orderData['email'];
-                        $items = $orderData['items'];
+                        $name = $orderData['name'];
+                        $address = $orderData['address'];
 
+                        $currencyId = $orderData['currencyId'];
+
+                        $orderRepo->createOrder($cartItems, $name, $email, $address, $currencyId);
                         return "Order created for " . $email;
                     }
                 ]

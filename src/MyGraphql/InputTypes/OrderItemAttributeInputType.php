@@ -13,7 +13,7 @@ class OrderItemAttributeInputType extends InputObjectType
             'name' => 'OrderItemAttributeInput',
             'fields' => [
                 'attributeId' => Type::nonNull(Type::string()),
-                'attributeVaklueId' => Type::nonNull(Type::string()),
+                'attributeValueId' => Type::nonNull(Type::string()),
             ]
         ]);
     }
