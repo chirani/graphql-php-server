@@ -19,9 +19,9 @@ class OrderRepository extends ServiceEntityRepository
 
     public function createOrder(array $cartItems, string $name, string $email, string $address, string $currencyId): Order
     {
-
-        $response = new Response();
         $em = $this->em;
+        $response = new Response();
+
 
         $order = new Order($name, $email, $address);
         $currency = $em->getRepository(Currency::class)->find($currencyId);
@@ -55,12 +55,10 @@ class OrderRepository extends ServiceEntityRepository
                 if (is_null($attribute)) {
                     $response->error("Attribute not Found", 404);
                 }
-                echo is_null($attribute) ? "null" : "Attribute found";
 
                 $attributeValue = $em->getRepository(ProductAttributeValue::class)
                     ->findBy(["id" => $attributeValueId]);
 
-                echo count($attributeValue) ? "null" : "Attribute Value found";
 
                 if (!count($attributeValue)) {
                     $response->error("Attribute Value not Found", 404);
