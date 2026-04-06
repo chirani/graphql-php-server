@@ -47,4 +47,9 @@ class Order
     {
         $this->currency = $currency;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }
