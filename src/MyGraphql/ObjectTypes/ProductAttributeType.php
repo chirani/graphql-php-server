@@ -3,7 +3,6 @@
 namespace App\MyGraphql\ObjectTypes;
 
 use App\Entity\ProductAttribute;
-use App\Entity\ProductAttributeValue;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
