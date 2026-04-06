@@ -9,9 +9,9 @@ use App\Entity\OrderItemAttribute;
 use App\Entity\Product;
 use App\Entity\ProductAttribute;
 use App\Entity\ProductAttributeValue;
-use App\Http\Response;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use GraphQL\Error\UserError;
 
 class OrderRepository extends ServiceEntityRepository
 {
@@ -20,8 +20,6 @@ class OrderRepository extends ServiceEntityRepository
     public function createOrder(array $cartItems, string $name, string $email, string $address, string $currencyId): Order
     {
         $em = $this->em;
-        $response = new Response();
-
 
         $order = new Order($name, $email, $address);
         $currency = $em->getRepository(Currency::class)->find($currencyId);
@@ -32,7 +30,7 @@ class OrderRepository extends ServiceEntityRepository
                 ->find($cartItem['productId']);
 
             if (is_null($product)) {
-                $response->error("Product not Found in DB", 404);
+                throw new UserError("Product not Found in DB", 404);
             }
 
             $orderItem = new OrderItem(
@@ -53,7 +51,7 @@ class OrderRepository extends ServiceEntityRepository
 
 
                 if (is_null($attribute)) {
-                    $response->error("Attribute not Found", 404);
+                    throw new UserError("Attribute not Found", 404);
                 }
 
                 $attributeValue = $em->getRepository(ProductAttributeValue::class)
@@ -61,7 +59,7 @@ class OrderRepository extends ServiceEntityRepository
 
 
                 if (!count($attributeValue)) {
-                    $response->error("Attribute Value not Found", 404);
+                    throw new UserError("Attribute Value not Found", 404);
                 }
 
                 $orderItemAttribute = new OrderItemAttribute();

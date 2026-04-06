@@ -2,13 +2,16 @@
 
 namespace App\MyGraphql;
 
+use App\Http\Response;
 use App\MyGraphql\InputTypes\CreateOrderInputType;
 use App\MyGraphql\ObjectTypes\CategoryType;
+use App\MyGraphql\ObjectTypes\MessageType;
 use App\MyGraphql\ObjectTypes\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManager;
+use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Schema;
@@ -64,6 +67,8 @@ class SchemaBuilder
             ]
         ]);
 
+        $messageType = new MessageType();
+
         $mutationType = new ObjectType([
             'name' => 'Mutation',
             'fields' => [
@@ -77,22 +82,51 @@ class SchemaBuilder
                     }
                 ],
                 'createOrder' => [
-                    'type' => Type::string(),
+                    'type' => $messageType,
                     'args' => [
                         'input' => Type::nonNull(new CreateOrderInputType()),
                     ],
                     'resolve' => function ($_, $args) use ($orderRepo) {
-                        $orderData = $args['input'];
+                        try {
+                            $orderData = $args['input'];
 
-                        $cartItems = $orderData['items'];
-                        $email = $orderData['email'];
-                        $name = $orderData['name'];
-                        $address = $orderData['address'];
-                        $currencyId = $orderData['currencyId'];
+                            $cartItems = $orderData['items'] ?? null;
+                            $email = $orderData['email'] ?? null;
+                            $name = $orderData['name'] ?? null;
+                            $address = $orderData['address'] ?? null;
+                            $currencyId = $orderData['currencyId'] ?? null;
 
-                        $orderRepo->createOrder($cartItems, $name, $email, $address, $currencyId);
+                            // --- Validation ---
+                            if (!$cartItems || !is_array($cartItems) || count($cartItems) === 0) {
+                                throw new UserError('Cart items are required and cannot be empty.', 400);
+                            }
+                            if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                throw new UserError('Invalid email address.', 400);
+                            }
+                            if (!$name) {
+                                throw new UserError('Name is required.', 400);
+                            }
+                            if (!$address) {
+                                throw new UserError('Address is required.', 400);
+                            }
+                            if (!$currencyId) {
+                                throw new UserError('Currency ID is required.', 400);
+                            }
 
-                        return "Order created for " . $email;
+                            $orderRepo->createOrder($cartItems, $name, $email, $address, $currencyId);
+
+                            return [
+                                'message' => 'Order made',
+                            ];
+                        } catch (UserError $e) {
+
+                            throw $e;
+                        } catch (\Throwable $e) {
+
+                            error_log($e->getMessage());
+
+                            throw new UserError('Internal server error. Please try again later.', 400);
+                        }
                     }
                 ]
             ],
