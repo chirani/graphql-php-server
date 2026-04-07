@@ -22,8 +22,13 @@ class OrderItemAttribute
     private ProductAttribute $attribute;
 
     #[ORM\ManyToOne(targetEntity: ProductAttributeValue::class, inversedBy: "order_item_attributes")]
-    #[ORM\JoinColumn(name: "attribute_value_id", referencedColumnName: "id")]
-    private ProductAttributeValue $attributeValue;
+    #[ORM\JoinColumn(
+        name: "attribute_value_id",
+        referencedColumnName: "id",
+        nullable: true,
+        columnDefinition: "VARCHAR(255)"
+    )]
+    private ?ProductAttributeValue $attributeValue = null;
 
     public function __construct() {}
 

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -20,7 +22,8 @@ class ProductAttributeValue
     private string $displayValue;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'product_attribute_values')]
-    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
+
     private ?Product $product = null;
 
     #[ORM\Id]
@@ -28,11 +31,16 @@ class ProductAttributeValue
     #[ORM\JoinColumn(name: 'product_attribute_id', referencedColumnName: 'id', nullable: false)]
     private ?ProductAttribute $productAttribute = null;
 
+    // Inside ProductAttributeValue class
+    #[ORM\OneToMany(mappedBy: "product_attribute_value", targetEntity: OrderItemAttribute::class)]
+    private Collection $order_item_attributes;
+
     public function __construct(string $id, string $value, string $displayValue)
     {
         $this->id = $id;
         $this->value = $value;
         $this->displayValue = $displayValue;
+        $this->order_item_attributes = new ArrayCollection();
     }
     public function setProduct(Product $product)
     {

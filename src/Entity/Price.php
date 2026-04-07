@@ -17,11 +17,11 @@ class Price
     private float $amount;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'prices')]
-    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
     private ?Product $product = null;
 
     #[ORM\ManyToOne(targetEntity: Currency::class, inversedBy: 'prices')]
-    #[ORM\JoinColumn(name: 'currency_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'currency_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
     private ?Currency $currency = null;
 
     public function __construct(float $amount)

@@ -26,7 +26,7 @@ class OrderItem
     private float $price_amount;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'order_items')]
-    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
     private ?Product $product = null;
 
     #[ORM\Column(type: "integer")]

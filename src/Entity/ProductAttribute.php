@@ -19,7 +19,8 @@ class ProductAttribute
     private string $sid;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'product_attributes')]
-    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
+
     private ?Product $product = null;
 
 

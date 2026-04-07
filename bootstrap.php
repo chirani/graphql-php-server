@@ -11,8 +11,13 @@ $config = ORMSetup::createAttributeMetadataConfiguration(
 );
 
 $connection = DriverManager::getConnection([
-    'driver' => 'pdo_sqlite',
-    'path' => __DIR__ . '/db.sqlite',
+    'driver' => 'pdo_mysql',
+    'host' => '127.0.0.1',
+    'port' => 3306,
+    'dbname' => 'my_app_db',
+    'user' => 'user_name',
+    'password' => 'user_password',
+    'charset' => 'utf8mb4',
 ], $config);
 
 // obtaining the entity manager

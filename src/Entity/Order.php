@@ -32,7 +32,7 @@ class Order
     private Collection $items;
 
     #[ORM\ManyToOne(targetEntity: Currency::class, inversedBy: "orders")]
-    #[ORM\JoinColumn(name: "currency_id", referencedColumnName: "id")]
+    #[ORM\JoinColumn(name: "currency_id", referencedColumnName: "id", columnDefinition: "VARCHAR(255)")]
     private Currency $currency;
 
     public function __construct(string $name, string $email, string $address)

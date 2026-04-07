@@ -20,7 +20,8 @@ class ProductContent
     private string $product_content_uri;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'product_contents')]
-    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
+
     private ?Product $product = null;
 
     public function __construct(int $position, string $product_content_uri)

@@ -1,0 +1,25 @@
+services:
+  db:
+    image: mysql:8.0.45-debian
+    container_name: mysql_db
+    restart: always
+    environment:
+      # Sets the root password
+      MYSQL_ROOT_PASSWORD: rootpassword
+      # Creates a specific database on startup
+      MYSQL_DATABASE: my_app_db
+      # Creates a non-root user
+      MYSQL_USER: user_name
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:

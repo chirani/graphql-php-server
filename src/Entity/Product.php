@@ -20,7 +20,7 @@ class Product
     #[ORM\Column(type: 'boolean')]
     private bool $inStock;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', columnDefinition: "Text")]
     private string $description;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductContent::class)]
@@ -36,11 +36,11 @@ class Product
     private Collection $orderItems;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
-    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
     private ?Category $category = null;
 
     #[ORM\ManyToOne(targetEntity: Brand::class, inversedBy: 'products')]
-    #[ORM\JoinColumn(name: 'brand_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'brand_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
     private ?Brand $brand = null;
 
     public function __construct(string $id, string $name, bool $inStock, string $description)
