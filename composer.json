@@ -1,26 +1,28 @@
 {
-    "name": "chirani/php_two",
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "b.chirani",
-            "email": "chirani124@gmail.com"
-        }
-    ],
-    "require": {
-        "doctrine/orm": "^3",
-        "doctrine/dbal": "^4",
-        "symfony/cache": "^7",
-        "bramus/router": "~1.6",
-        "webonyx/graphql-php": "^15.30"
-    },
-    "scripts": {
-        "dev": "php -S localhost:8080 -t public",
-        "drop": "php bin/doctrine orm:schema-tool:drop --force",
-        "push": "php bin/doctrine orm:schema-tool:create"
+  "name": "chirani/php_two",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "b.chirani",
+      "email": "chirani124@gmail.com"
+    }
+  ],
+  "require": {
+    "doctrine/orm": "^3",
+    "doctrine/dbal": "^4",
+    "symfony/cache": "^7",
+    "bramus/router": "~1.6",
+    "webonyx/graphql-php": "^15.30",
+    "doctrine/doctrine-bundle": "^2.18",
+    "doctrine/migrations": "^3.9"
+  },
+  "scripts": {
+    "dev": "php -S localhost:8080 -t public",
+    "drop": "php bin/doctrine orm:schema-tool:drop --force",
+    "push": "php bin/doctrine orm:schema-tool:create"
+  }
 }
