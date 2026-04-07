@@ -2,7 +2,6 @@
 
 namespace App\MyGraphql;
 
-use App\Http\Response;
 use App\MyGraphql\InputTypes\CreateOrderInputType;
 use App\MyGraphql\ObjectTypes\CategoryType;
 use App\MyGraphql\ObjectTypes\MessageType;
