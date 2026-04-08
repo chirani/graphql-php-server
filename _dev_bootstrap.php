@@ -20,9 +20,9 @@ $password = $_ENV['mysql_password'];
 
 $connection = DriverManager::getConnection([
     'driver' => 'pdo_mysql',
-    'host' => 'sql202.infinityfree.com',
+    'host' => 'mysql.railway.internal',
     'port' => 3306,
-    'dbname' => 'if0_41596044_my_db_1',
+    'dbname' => 'railway',
     'user' => $username,
     'password' => $password,
     'charset' => 'utf8mb4',
