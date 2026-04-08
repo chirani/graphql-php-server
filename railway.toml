@@ -1,0 +1,2 @@
+dockerComposeFile = "docker-compose.yml"
+dockerComposeService = "app"

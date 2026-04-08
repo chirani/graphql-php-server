@@ -20,13 +20,13 @@ $password = $_ENV['mysql_password'];
 
 $connection = DriverManager::getConnection([
     'driver' => 'pdo_mysql',
-    'host' => 'mysql.railway.internal',
-    'port' => 3306,
+    'host' => 'maglev.proxy.rlwy.net',
+    'port' => 36413,
     'dbname' => 'railway',
     'user' => $username,
     'password' => $password,
     'charset' => 'utf8mb4',
 ], $config);
-
 // obtaining the entity manager
+
 $entityManager = new EntityManager($connection, $config);
