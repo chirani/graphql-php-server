@@ -15,14 +15,17 @@ $config = ORMSetup::createAttributeMetadataConfiguration(
     isDevMode: true,
 );
 
-$username = $_ENV['mysql_username'];
-$password = $_ENV['mysql_password'];
+$username = $_ENV['MYSQL_USER'];
+$password = $_ENV['MYSQL_PASSWORD'];
+$host = $_ENV['MYSQL_HOST'];
+$port = $_ENV['MYSQL_PORT'];
+$dbname = $_ENV['MYSQL_DB'];
 
 $connection = DriverManager::getConnection([
     'driver' => 'pdo_mysql',
-    'host' => 'maglev.proxy.rlwy.net',
-    'port' => 36413,
-    'dbname' => 'railway',
+    'host' => $host,
+    'port' => $port,
+    'dbname' => $dbname,
     'user' => $username,
     'password' => $password,
     'charset' => 'utf8mb4',
