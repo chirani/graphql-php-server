@@ -8,6 +8,9 @@ use App\MyGraphql\SchemaBuilder;
 
 require __DIR__ . "/cors.php";
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
 $router = new \Bramus\Router\Router();
 
 $router->before('GET|POST|PUT|DELETE', '/api/.*', function () {
@@ -15,7 +18,8 @@ $router->before('GET|POST|PUT|DELETE', '/api/.*', function () {
 });
 
 $router->get('/ping', function () {
-    echo "HEYOO!";
+    echo "HEYOO! \n";
+    $_ENV["TEST_ENV"];
 });
 
 $router->post('/api/graphql', function () {
