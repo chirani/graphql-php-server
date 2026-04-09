@@ -19,7 +19,7 @@ $router->before('GET|POST|PUT|DELETE', '/api/.*', function () {
 
 $router->get('/ping', function () {
     echo "HEYOO! \n";
-    $_ENV["TEST_ENV"];
+    echo $_ENV["TEST_ENV"];
 });
 
 $router->post('/api/graphql', function () {
