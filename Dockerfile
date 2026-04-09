@@ -30,6 +30,6 @@ RUN composer install --no-interaction --optimize-autoloader
 # 7. Final Command
 # This dynamically sets the port (10000 for Render, or $PORT for Railway)
 # then starts Apache in the foreground.
-CMD sed -i "s/Listen 80/Listen ${PORT:-10000}/" /etc/apache2/ports.conf && \
-    sed -i "s/:80/:${PORT:-10000}/" /etc/apache2/sites-available/000-default.conf && \
+CMD sed -i "s/Listen 80/Listen ${PORT:-80}/" /etc/apache2/ports.conf && \
+    sed -i "s/:80/:${PORT:-80}/" /etc/apache2/sites-available/000-default.conf && \
     apache2-foreground
