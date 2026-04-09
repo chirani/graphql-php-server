@@ -14,6 +14,10 @@ $router->before('GET|POST|PUT|DELETE', '/api/.*', function () {
     header('Content-Type: application/json');
 });
 
+$router->get('/ping', function () {
+    echo "HEYOO!";
+});
+
 $router->post('/api/graphql', function () {
     require_once __DIR__ . '/../bootstrap.php';
     try {
