@@ -82,3 +82,7 @@ This project implements `symfony/cache` to optimize metadata and query performan
 ```bash
 rm -rf var/cache/*
 ```
+
+---
+
+By B.chirani
