@@ -11,11 +11,10 @@ class CategoryRepository
 
     public function findAll(): array
     {
+
         $categories = $this->em
             ->getRepository(Category::class)
             ->findAll();
-
-        count($categories);
 
         return $categories;
     }

@@ -57,6 +57,7 @@ $router->post('/api/graphql', function () {
         if (!$query) {
             throw new Exception("No query provided.");
         }
+
         $result = GraphQL::executeQuery($schema, $query, null, null, $variables);
         $output = $result->toArray();
     } catch (Exception $e) {
@@ -68,6 +69,7 @@ $router->post('/api/graphql', function () {
         ];
     }
     header('Content-Type: application/json');
+    echo json_encode($output);
     return json_encode($output);
 });
 

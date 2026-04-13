@@ -2,7 +2,7 @@
 
 // 1. Define allowed origins
 $allowed_origins = [
-    "http://localhost:3000", // Common React port
+    "http://localhost:4173", // Common React port
     "http://localhost:5173", // Common Vite port
     "http://127.0.0.1:5500", // Live Server port
     "https://react-tanstack-router-graphql.onrender.com",
