@@ -21,6 +21,9 @@ class ProductAttributeValue
     #[ORM\Column(name: "display_value", type: "string")]
     private string $displayValue;
 
+    #[ORM\Column(type: "integer")]
+    private int $position;
+
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'product_attribute_values')]
     #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', columnDefinition: "VARCHAR(255)")]
 
@@ -35,11 +38,12 @@ class ProductAttributeValue
     #[ORM\OneToMany(mappedBy: "product_attribute_value", targetEntity: OrderItemAttribute::class)]
     private Collection $order_item_attributes;
 
-    public function __construct(string $id, string $value, string $displayValue)
+    public function __construct(string $id, string $value, string $displayValue, int $position)
     {
         $this->id = $id;
         $this->value = $value;
         $this->displayValue = $displayValue;
+        $this->position = $position;
         $this->order_item_attributes = new ArrayCollection();
     }
     public function setProduct(Product $product)
@@ -65,5 +69,10 @@ class ProductAttributeValue
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

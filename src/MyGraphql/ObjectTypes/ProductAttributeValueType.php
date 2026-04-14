@@ -24,6 +24,10 @@ class ProductAttributeValueType extends ObjectType
                 "displayValue" => [
                     'type' => Type::string(),
                     'resolve' => fn(ProductAttributeValue $productAttributeValue) => $productAttributeValue->getDisplayValue()
+                ],
+                "position" => [
+                    'type' => Type::int(),
+                    'resolve' => fn(ProductAttributeValue $productAttributeValue) => $productAttributeValue->getPosition()
                 ]
             ]
         ]);

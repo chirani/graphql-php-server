@@ -113,8 +113,8 @@ foreach ($products as $product) {
 
         $attribute_items = $attribute["items"];
 
-        foreach ($attribute_items as $attribute_item) {
-            $new_attribute_item = new ProductAttributeValue($attribute_item["id"], $attribute_item["value"], $attribute_item["displayValue"]);
+        foreach ($attribute_items as $key => $value) {
+            $new_attribute_item = new ProductAttributeValue($value["id"], $value["value"], $value["displayValue"], $key);
 
             $new_attribute_item->setProduct($new_product);
             $new_attribute_item->setProductAttribute($new_attribute);
